@@ -1,1 +1,0 @@
-# sharezone-frontend-react
