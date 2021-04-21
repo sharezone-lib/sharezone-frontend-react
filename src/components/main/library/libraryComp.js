@@ -57,9 +57,17 @@ const useStyles = makeStyles((theme) => ({
   [theme.breakpoints.up('sm')]: {
     appBar: {
       width:`${width}px`,
+      display: 'flex',
+
+      // backgroundColor:'red'
       // width: `calc(100% - ${drawerWidth}px)`,
         // marginLeft: drawerWidth,
     }
+  },
+  booksWrapper:{
+    display: 'flex',
+    flexWrap:'wrap',
+    // width:'100%',
   }
 }));
 
@@ -78,7 +86,7 @@ function ScrollableTabsButtonAuto() {
       {
         index:1,
         label:'Arts',
-        books:['Bengali','English','Hindi','Urdu']
+        books:['Bengali','English','Hindi','Urdu','Tamil','Telugu','Uneducated']
       },
       {
         index:2,
@@ -147,10 +155,16 @@ function ScrollableTabsButtonAuto() {
     {label:'Story Books',},
     {label:'item eight',},
   ];
-  const books = {
-    Arts:['Bengali','English','Hindi','Urdu'],
-    Animals:[]
-  }
+
+  const allBooks = subjects.AllBooks.map((sub,index)=> 
+    sub.books.map((book,index)=>
+        <BookcardComp name={book} />
+    )
+  );
+  const subBooks =  subjects.AllBooks[value].books.map((book,index)=>
+    <BookcardComp name={book} />
+  )
+  const renderBooks = (value===0)?allBooks:subBooks
   return (
     <div >
       <CssBaseline />
@@ -172,40 +186,15 @@ function ScrollableTabsButtonAuto() {
 
         </Tabs>
       </AppBar>
+        {items.map((item,index)=>
+            <TabPanel value={value} index={index} className={classes.appBar}>
+              {item.label}
+              <div className={classes.booksWrapper}>
+                {renderBooks}
+              </div>      
+            </TabPanel>
+        )}
 
-        {items.map((item,index)=>(
-          <TabPanel value={value} index={index} className={classes.appBar}>
-            {item.label}
-            {(value===0)?
-            subjects.AllBooks.map((sub,index)=> (
-              <div>
-                {sub.books.map((book,index)=>(
-                  <div>
-                    {book}
-                  </div>
-                ))}
-              </div>
-            )): 
-            subjects.AllBooks[value].books.map((book,index)=>(
-              <div>
-                {book}
-              </div>
-            ))}
-            <BookcardComp/>
-            {/* <Typography paragraph>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-              ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent elementum
-              facilisis leo vel. Risus at ultrices mi tempus imperdiet. Semper risus in hendrerit
-              gravida rutrum quisque non tellus. Convallis convallis tellus id interdum velit laoreet id
-              donec ultrices. Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-              adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra nibh cras.
-              Metus vulputate eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo quis
-              imperdiet massa tincidunt. Cras tincidunt lobortis feugiat vivamus at augue. At augue eget
-              arcu dictum varius duis at consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem
-              donec massa sapien faucibus et molestie ac.
-            </Typography> */}
-          </TabPanel>
-        ))}
   
     </div>
   );
@@ -214,7 +203,7 @@ function ScrollableTabsButtonAuto() {
 function LibraryComp() {
   return(
     <div>
-      <ScrollableTabsButtonAuto />
+      <ScrollableTabsButtonAuto key="1"/>
     </div>
   );
 }
