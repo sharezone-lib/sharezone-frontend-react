@@ -1,6 +1,6 @@
 function CategoriesComp() {
   return(
-    <div className="create-wrapper">
+    <div>
       categories
     </div>
   );

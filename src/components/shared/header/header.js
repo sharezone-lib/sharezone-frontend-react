@@ -380,7 +380,6 @@ function NavTabs(props) {
               paper: classes.drawerPaper,
             }}
             variant="permanent"
-            open
           >
             {drawer}
           </SwipeableDrawer>
